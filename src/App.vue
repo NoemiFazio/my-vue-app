@@ -1,15 +1,10 @@
 <script setup>
-import {
-  ref,
-  // reactive
-} from "vue";
+import { ref } from "vue";
 import socksGreenImage from "./assets/images/socks_green.jpeg";
 import socksBlueImage from "./assets/images/socks_blue.jpeg";
-//sotto è equivalente dello useState di react
+
 const product = ref("Socks");
 const image = ref(socksGreenImage);
-//commentato perchè non serve
-// const inventory = ref(8);
 const inStock = ref(false);
 const details = ref(["50% cotton", "30% wool", "20% polyester"]);
 const variants = ref([
@@ -22,25 +17,6 @@ const addToCart = () => (cart.value += 1);
 const updateImage = (variantImage) => {
   image.value = variantImage;
 };
-
-//commentato perchè non serve
-// setTimeout(() => {
-//   product.value= "Ciaone"
-// }, 1000)
-
-// il codice sopra i può scrivere anche così, di solito se abbiamo un oggetto:
-// const product = reactive({ name: "Hola"})
-// setTimeout(() => {
-//   product.name= "Ciaone"
-// }, 1000)
-
-// esempio di come scrivere un custom hook:
-// const useChangeWithDelay = function(state, newVal, delay){
-//   setTimeout(() => {
-//   state.value= newVal
-// }, delay)
-// }
-// useChangeWithDelay(product, "New Socks", 1000)
 </script>
 
 <template>
@@ -55,10 +31,6 @@ const updateImage = (variantImage) => {
         <h1>{{ product }}</h1>
         <p v-if="inStock">In stock</p>
         <p v-else>Out of stock</p>
-        <!-- <p v-if="inventory > 10">In stock</p>
-        <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
-        <p v-else>out of stock</p> -->
-        <!-- <p v-show="inStock">In Stock</p> -->
         <ul>
           <li v-for="detail in details">{{ detail }}</li>
         </ul>
