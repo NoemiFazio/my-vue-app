@@ -9,11 +9,12 @@ const props = defineProps({
     required: true,
   },
 });
+//Funzione emit
+const emit = defineEmits(["add-to-cart"]);
 
 const product = ref("Socks");
 const brand = ref("Vue Mastery");
 const selectedVariant = ref(0);
-// ⇩⇩⇩ Ogni volta che il title cambia, viene ricalcolato automaticamente ⇩⇩⇩
 const title = computed(() => {
   return brand.value + " " + product.value;
 });
@@ -21,11 +22,9 @@ const image = computed(() => {
   return variants.value[selectedVariant.value].image;
 });
 const inStock = computed(() => {
-  // ritornerà true se è vero, altrimenti false
   return variants.value[selectedVariant.value].quantity > 0;
 });
 
-//questa è la shipping fee calcolata in base alla premium prop
 const shipping = computed(() => {
   if (props.premium) {
     return "Free shipping";
@@ -40,7 +39,9 @@ const variants = ref([
   { id: 2235, color: "blue", image: socksBlueImage, quantity: 0 },
 ]);
 
-const addToCart = () => (cart.value += 1);
+const addToCart = () => {
+  emit("add-to-cart", variants.value[selectedVariant.value].id);
+};
 const updateVariant = (index) => {
   selectedVariant.value = index;
 };
@@ -53,7 +54,6 @@ const updateVariant = (index) => {
         <img v-bind:src="image" alt="" />
       </div>
       <div class="product-info">
-        <!-- <h1>{{ brand + " " + product }}</h1> -->
         <h1>{{ title }}</h1>
         <p v-if="inStock">In stock</p>
         <p v-else>Out of stock</p>
