@@ -2,6 +2,8 @@
 import { ref, computed } from "vue";
 import socksGreenImage from "@/assets/images/socks_green.jpeg";
 import socksBlueImage from "@/assets/images/socks_blue.jpeg";
+import ReviewForm from "@/components/ReviewForm.vue";
+import ReviewList from "@/components/ReviewList.vue";
 
 const props = defineProps({
   premium: {
@@ -14,6 +16,7 @@ const emit = defineEmits(["add-to-cart"]);
 
 const product = ref("Socks");
 const brand = ref("Vue Mastery");
+const reviews = ref([]);
 const selectedVariant = ref(0);
 const title = computed(() => {
   return brand.value + " " + product.value;
@@ -45,6 +48,11 @@ const addToCart = () => {
 const updateVariant = (index) => {
   selectedVariant.value = index;
 };
+
+const addReview = (review) => {
+  reviews.value.push(review);
+  console.log(reviews);
+};
 </script>
 
 <template>
@@ -59,7 +67,7 @@ const updateVariant = (index) => {
         <p v-else>Out of stock</p>
         <p>Shipping: {{ shipping }}</p>
         <ul>
-          <li v-for="detail in details">{{ detail }}</li>
+          <li v-for="(detail, index) in details" :key="index">{{ detail }}</li>
         </ul>
         <div
           v-for="(variant, index) in variants"
@@ -78,5 +86,7 @@ const updateVariant = (index) => {
         </button>
       </div>
     </div>
+    <ReviewList :reviews="reviews"></ReviewList>
+    <ReviewForm @review-submitted="addReview"></ReviewForm>
   </div>
 </template>
