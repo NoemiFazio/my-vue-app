@@ -1,9 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import ProductDisplay from "@/components/ProductDisplay.vue";
 
 const cart = ref([]);
 const premium = ref(true);
+
+// onMounted(() => DA VEDEREEEE)
+
 const updateCart = (id) => {
   cart.value.push(id);
 };
